@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>Bipolar-pre-experiment-stats</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+
+
+
+
+</head>
+
+<body>
+<h1>Bipolar-pre-experiment-stats</h1>
+
+<p>#Cobble splitting data from pre-experiments</p>
+
+<p>class(r.cobble.data) #check the object: I will upload this .csv file to google drive
+r.cobble.data.new&lt;-arrange(r.cobble.data, desc(sample)) #load plyr package and sort 
+r.cobble.data.random&lt;-subset(r.cobble.data.new, sample == &ldquo;random&rdquo;) #extract data based on sample type
+r.cobble.data.collected&lt;-subset(r.cobble.data.new, sample == &ldquo;collected&rdquo;) #extract data based on sample type
+r.cobble.data.expert&lt;-subset(r.cobble.data, participant == &ldquo;expert&rdquo;) #extract data based on participant
+r.cobble.data.novice&lt;-subset(r.cobble.data, participant == &ldquo;novice&rdquo;)
+r.cobble.data.expert.collected&lt;-subset(r.cobble.data.expert, sample == &ldquo;collected&rdquo;) #extract expert data based on sample type
+r.cobble.data.expert.random&lt;-subset(r.cobble.data.expert, sample == &ldquo;random&rdquo;) #extract expert data based on sample type
+r.cobble.data.novice.collected&lt;-subset(r.cobble.data.novice, sample == &ldquo;collected&rdquo;) #extract expert data based on sample type
+r.cobble.data.novice.random&lt;-subset(r.cobble.data.novice, sample == &ldquo;random&rdquo;) #extract expert data based on sample type
+summary(r.cobble.data.expert.collected) #or any of the data sets to check what class they are (data.frame etc)</p>
+
+<p>#test for normality
+shapiro.test(r.cobble.data.expert.collected$length) #YES
+var(r.cobble.data.expert.collected$length)
+qqnorm(r.cobble.data.expert.collected$length);qqline(r.cobble.data.expert.collected$length, col = 2)
+shapiro.test(r.cobble.data.expert.collected$breadth) #YES
+qqnorm(r.cobble.data.expert.collected$breadth);qqline(r.cobble.data.expert.collected$breadth, col = 2)
+shapiro.test(r.cobble.data.expert.collected$thickness) #NO
+qqnorm(r.cobble.data.expert.collected$thickness);qqline(r.cobble.data.expert.collected$thickness, col = 2)
+shapiro.test(r.cobble.data.expert.collected$mass) #NO</p>
+
+<p>shapiro.test(r.cobble.data.novice.collected$length) #YES
+var(r.cobble.data.novice.collected$length)
+shapiro.test(r.cobble.data.novice.collected$breadth) #YES
+shapiro.test(r.cobble.data.novice.collected$thickness) #YES
+shapiro.test(r.cobble.data.novice.collected$mass) #NO</p>
+
+<p>#Skewness, kurtosis</p>
+
+<p>skewness(r.cobble.data.expert.collected$length) #load moments package
+skewness(r.cobble.data.expert.collected$breadth)
+skewness(r.cobble.data.expert.collected$thickness)
+skewness(r.cobble.data.expert.collected$mass)</p>
+
+<p>kurtosis(r.cobble.data.expert.collected$length)
+kurtosis(r.cobble.data.expert.collected$breadth)
+kurtosis(r.cobble.data.expert.collected$thickness)
+kurtosis(r.cobble.data.expert.collected$mass)</p>
+
+<p>r.cobble.data.novices.collected&lt;-subset(r.cobble.data.novice, sample == &ldquo;collected&rdquo;) 
+summary(r.cobble.data.novices.collected)</p>
+
+<p>skewness(r.cobble.data.novice.collected$length)
+skewness(r.cobble.data.novice.collected$breadth)
+skewness(r.cobble.data.novice.collected$thickness)
+skewness(r.cobble.data.novice.collected$mass)</p>
+
+<p>kurtosis(r.cobble.data.novice.collected$length)
+kurtosis(r.cobble.data.novice.collected$breadth)
+kurtosis(r.cobble.data.novice.collected$thickness)
+kurtosis(r.cobble.data.novice.collected$mass)</p>
+
+<p>#get CV data for expert and novice collected
+co.var&lt;-function(x)( #function to calculate CV values
+100*sd(x)/mean(x)
+  )</p>
+
+<p>co.var(r.cobble.data.expert.collected$length)
+co.var(r.cobble.data.expert.collected$breadth)
+co.var(r.cobble.data.expert.collected$thickness)</p>
+
+<p>co.var(r.cobble.data.novice.collected$length)
+co.var(r.cobble.data.novice.collected$breadth)
+co.var(r.cobble.data.novice.collected$thickness)</p>
+
+<p>#t-tests (random vs collected: ALL)
+t.test(r.cobble.data.collected$length,r.cobble.data.random$length)
+t.test(r.cobble.data.collected$breadth,r.cobble.data.random$breadth)
+t.test(r.cobble.data.collected$thickness,r.cobble.data.random$thickness)
+t.test(r.cobble.data.collected$mass,r.cobble.data.random$mass)</p>
+
+<p>#plot collected vs random for both expert and novice
+collected.plot.length&lt;-ggplot(r.cobble.data.new, aes(length, fill = sample)) + geom_density(alpha = 0.2) #overlayed histograms
+collected.plot.length + ggtitle(&ldquo;All Collected vs Random Lengths&rdquo;) + xlab(&ldquo;p-value = &lt; 2.2e-16&rdquo;)
+collected.plot.breadth&lt;-ggplot(r.cobble.data.new, aes(breadth, fill = sample)) + geom_density(alpha = 0.2)
+collected.plot.breadth + ggtitle(&ldquo;All Collected vs Random Breadths&rdquo;) + xlab(&ldquo;p-value = &lt; 2.2e-16&rdquo;)
+collected.plot.thickness&lt;-ggplot(r.cobble.data.new, aes(thickness, fill = sample)) + geom_density(alpha = 0.2)
+collected.plot.thickness + ggtitle(&ldquo;All Collected vs Random Thickness&rdquo;) + xlab(&ldquo;p-value = &lt; 2.2e-16&rdquo;)
+collected.plot.mass&lt;-ggplot(r.cobble.data.new, aes(mass, fill = sample)) + geom_density(alpha = 0.2)
+collected.plot.mass + ggtitle(&ldquo;All Collected vs Random Mass&rdquo;) + xlab(&ldquo;p-value = &lt; 2.2e-16&rdquo;)</p>
+
+<p>#PERMUTATION TEST
+#LENGTH
+breadths.combined&lt;-c(r.cobble.data.novice.collected$breadth, r.cobble.data.expert.collected$breadth) #recombine the male and female glucose data sets</p>
+
+<pre><code>    # create an observed difference
+</code></pre>
+
+<p>diff.means.breadth&lt;-mean(r.cobble.data.novice.collected$breadth)-mean(r.cobble.data.expert.collected$breadth) #calculate the difference in their means for later comparison
+number_of_permutations&lt;- 500000  #set number of permutations
+diff.random&lt;- NULL #create vector to store results</p>
+
+<p>for (i in 1:number_of_permutations) {
+        # Sample from the combined dataset
+  a.random = sample (lengths.combined, length(r.cobble.data.expert.collected$breadth), TRUE)
+  b.random = sample (lengths.combined, length(r.cobble.data.novice.collected$breadth), TRUE)</p>
+
+<p>diff.random[i]&lt;- mean(a.random) - mean(b.random)   # Null (permuated) difference
+}</p>
+
+<p>pvalue&lt;- sum(abs(diff.random) &gt;= abs(diff.means.breadth)) / number_of_permutations
+print (pvalue)  # P-value is the fraction of how many times the permuted difference is equal or more extreme than the observed difference</p>
+
+<p>#BREADTH
+breadth.combined&lt;-c(r.cobble.data.expert.collected$breadth, r.cobble.data.novice.collected$breadth) #recombine the male and female glucose data sets
+diff.means.breadth&lt;-mean(r.cobble.data.novice.collected$breadth)-mean(r.cobble.data.expert.collected$breadth) #calculate the difference in their means for later comparison
+number_of_permutations&lt;- 1000000  #set number of permutations
+diff.random&lt;- NULL #create vector to store results</p>
+
+<p>for (i in 1:number_of_permutations) {
+  # Sample from the combined dataset
+  a.random = sample (breadth.combined, length(r.cobble.data.novice.collected$length), TRUE)
+  b.random = sample (breadth.combined, length(r.cobble.data.expert.collected$length), TRUE)</p>
+
+<p>diff.random[i] = mean(b.random) - mean(a.random)   # Null (permuated) difference
+}</p>
+
+<p>pvalue&lt;- sum(abs(diff.random) &gt;= abs(diff.means.lengths)) / number_of_permutations
+print (pvalue)  # P-value is the fraction of how many times the permuted difference is equal or more extreme than the observed difference
+#why get a zero result here????</p>
+
+<p>#t-tests (random vs collected: Experts)
+t.test(r.cobble.data.expert.random$length,r.cobble.data.expert.collected$length)
+t.test(r.cobble.data.expert.random$breadth,r.cobble.data.expert.collected$breadth)
+t.test(r.cobble.data.expert.random$thickness,r.cobble.data.expert.collected$thickness)
+t.test(r.cobble.data.expert.random$mass,r.cobble.data.expert.collected$mass)</p>
+
+<p>#plot collected vs random for experts
+collected.vs.random.expert.length.plot&lt;-ggplot(r.cobble.data.expert, aes(length, fill = sample)) + geom_density(alpha = 0.2)
+collected.vs.random.expert.length.plot + ggtitle(&ldquo;Expert Collected vs Random Lengths&rdquo;) + xlab(&ldquo;p-value = 2.027e-10&rdquo;)
+collected.vs.random.expert.breadth.plot&lt;-ggplot(r.cobble.data.expert, aes(breadth, fill = sample)) + geom_density(alpha = 0.2)
+collected.vs.random.expert.breadth.plot + ggtitle(&ldquo;Expert Collected vs Random Breadths&rdquo;) + xlab(&ldquo;p-value = 4.479e-11&rdquo;)
+collected.vs.random.expert.thickness.plot&lt;-ggplot(r.cobble.data.expert, aes(thickness, fill = sample)) + geom_density(alpha = 0.2)
+collected.vs.random.expert.thickness.plot + ggtitle(&ldquo;Expert Collected vs Random Thickness&rdquo;) + xlab(&ldquo;p-value = 4.479e-11&rdquo;)
+collected.vs.random.expert.mass.plot&lt;-ggplot(r.cobble.data.expert, aes(mass, fill = sample)) + geom_density(alpha = 0.2)
+collected.vs.random.expert.mass.plot + ggtitle(&ldquo;Expert Collected vs Random Mass&rdquo;) + xlab(&ldquo;p-value = 5.216e-12&rdquo;)</p>
+
+<p>#t-tests (random vs collected: Novice)
+t.test(r.cobble.data.novice.random$length,r.cobble.data.novice.collected$length)
+t.test(r.cobble.data.novice.random$breadth,r.cobble.data.novice.collected$breadth)
+t.test(r.cobble.data.novice.random$thickness,r.cobble.data.novice.collected$thickness)
+t.test(r.cobble.data.novice.random$mass,r.cobble.data.novice.collected$mass)</p>
+
+<p>#plot collected vs random for novices
+collected.vs.random.novice.length.plot&lt;-ggplot(r.cobble.data.novice, aes(length, fill = sample)) + geom_density(alpha = 0.2)
+collected.vs.random.novice.length.plot + ggtitle(&ldquo;Novice Collected vs Random Lengths&rdquo;) + xlab(&ldquo;p-value = &lt; 2.2e-16&rdquo;)
+collected.vs.random.novice.breadth.plot&lt;-ggplot(r.cobble.data.novice, aes(breadth, fill = sample)) + geom_density(alpha = 0.2)
+collected.vs.random.novice.breadth.plot + ggtitle(&ldquo;Novice Collected vs Random Breadths&rdquo;) + xlab(&ldquo;p-value = &lt; 2.2e-16&rdquo;)
+collected.vs.random.novice.thickness.plot&lt;-ggplot(r.cobble.data.novice, aes(thickness, fill = sample)) + geom_density(alpha = 0.2)
+collected.vs.random.novice.thickness.plot + ggtitle(&ldquo;Novice Collected vs Random Thickness&rdquo;) + xlab(&ldquo;p-value = &lt; 2.2e-16&rdquo;)
+collected.vs.random.novice.mass.plot&lt;-ggplot(r.cobble.data.novice, aes(mass, fill = sample)) + geom_density(alpha = 0.2)
+collected.vs.random.novice.mass.plot + ggtitle(&ldquo;Novice Collected vs Random Mass&rdquo;) + xlab(&ldquo;p-value = &lt; 2.2e-16&rdquo;)</p>
+
+<p>#t-tests (expert vs novice collected)
+t.test(r.cobble.data.novice.collected$length,r.cobble.data.expert.collected$length)
+t.test(r.cobble.data.novice.collected$breadth,r.cobble.data.expert.collected$breadth)
+t.test(r.cobble.data.novice.collected$thickness,r.cobble.data.expert.collected$thickness)
+t.test(r.cobble.data.novice.collected$mass,r.cobble.data.expert.collected$mass)</p>
+
+<p>#plot expert vs novice collected 
+expert.vs.novice.length.plot&lt;-ggplot(r.cobble.data.collected, aes(length, fill = participant)) + geom_density(alpha = 0.2)
+expert.vs.novice.length.plot + ggtitle(&ldquo;Expert vs Novice Collected Cobble Length&rdquo;) + xlab(&ldquo;p-value = 1.291e-07&rdquo;)
+expert.vs.novice.breadth.plot&lt;-ggplot(r.cobble.data.collected, aes(breadth, fill = participant)) + geom_density(alpha = 0.2)
+expert.vs.novice.breadth.plot + ggtitle(&ldquo;Expert vs Novice Collected Cobble Breadth&rdquo;) + xlab(&ldquo;p-value = 0.04525&rdquo;)
+expert.vs.novice.thickness.plot&lt;-ggplot(r.cobble.data.collected, aes(thickness, fill = participant)) + geom_density(alpha = 0.2)
+expert.vs.novice.thickness.plot + ggtitle(&ldquo;Expert vs Novice Collected Cobble Thickness&rdquo;) + xlab(&ldquo;p-value = 5.999e-05&rdquo;)
+expert.vs.novice.mass.plot&lt;-ggplot(r.cobble.data.collected, aes(mass, fill = participant)) + geom_density(alpha = 0.2)
+expert.vs.novice.mass.plot + ggtitle(&ldquo;Expert vs Novice Collected Cobble Mass&rdquo;) + xlab(&ldquo;p-value = 1.069e-06&rdquo;)</p>
+
+<p>boxplot(length~participant,data=r.cobble.data.collected, main=&ldquo;Cobble length&rdquo;, xlab=&ldquo;p-value = 1.291e-07&rdquo;)
+boxplot(breadth~participant,data=r.cobble.data.collected, main=&ldquo;Cobble breadth&rdquo;, xlab=&ldquo;p-value = 0.04525&rdquo;)
+boxplot(thickness~participant,data=r.cobble.data.collected, main=&ldquo;Cobble thickness&rdquo;, xlab=&ldquo;p-value = 5.999e-05&rdquo;)</p>
+
+<p>#Boxplots with outliers labelled-load CAR package
+Boxplot(length~participant,data=r.cobble.data.collected, main=&ldquo;Expert vs Novice Collected Cobble Length&rdquo;, xlab=&ldquo;p-value = 1.291e-07&rdquo;, id.n=Inf)
+Boxplot(breadth~participant,data=r.cobble.data.collected, main=&ldquo;Expert vs Novice Collected Cobble Breadth&rdquo;, xlab=&ldquo;p-value = 0.04525&rdquo;, id.n=Inf)
+Boxplot(thickness~participant,data=r.cobble.data.collected, main=&ldquo;Expert vs Novice Collected Cobble Thickness&rdquo;, xlab=&ldquo;p-value = 5.999e-05&rdquo;, id.n=Inf)
+Boxplot(mass~participant,data=r.cobble.data.collected, main=&ldquo;Expert vs Novice Collected Cobble Mass&rdquo;, xlab=&ldquo;p-value = 1.069e-06&rdquo;, id.n=Inf)</p>
+
+<p>#plot variables against each other (experts)
+expert.length.thickness.plot &lt;- ggplot(r.cobble.data.expert.collected, aes(x = length, y = thickness)) +
+  geom_point() #ggplot of length vs thickness for collected expert cobbles
+expert.length.thickness.plot + ggtitle(&ldquo;Expert Collected Cobble Length vs. Thickness&rdquo;) + xlab(&ldquo;r2 = 0.3643&rdquo;)
+expert.length.breadth.plot &lt;- ggplot(r.cobble.data.expert.collected, aes(x = length, y = breadth)) +
+  geom_point()
+expert.length.breadth.plot + ggtitle(&ldquo;Expert Collected Cobble Length vs. Breadth&rdquo;) + xlab(&ldquo;r2 = 0.633&rdquo;)
+expert.thickness.breadth.plot &lt;- ggplot(r.cobble.data.expert.collected, aes(x = thickness, y = breadth)) +
+  geom_point()
+expert.thickness.breadth.plot + ggtitle(&ldquo;Expert Collected Cobble Thickness vs. Breadth&rdquo;) + xlab(&ldquo;r2 = 0.46&rdquo;)</p>
+
+<p>#Regression
+#expert
+expert.length.breadth.lm &lt;- lm(length~breadth, data=r.cobble.data.expert.collected)
+summary(expert.length.breadth.lm)
+plot(r.cobble.data.expert.collected$length, r.cobble.data.expert.collected$breadth)
+abline(expert.length.breadth.lm)
+identify(x=r.cobble.data.expert.collected$length, y=r.cobble.data.expert.collected$breadth, labels=rownames(Duncan))</p>
+
+<p>expert.length.thickness.lm &lt;- lm(length~thickness, data=r.cobble.data.expert.collected)
+summary(expert.length.thickness.lm)
+plot(r.cobble.data.expert.collected$length, r.cobble.data.expert.collected$thickness)
+abline(0,1)</p>
+
+<p>expert.breadth.thickness.lm &lt;- lm(breadth~thickness, data=r.cobble.data.expert.collected)
+summary(expert.breadth.thickness.lm)
+plot(r.cobble.data.expert.collected$breadth, r.cobble.data.expert.collected$thickness)
+abline(0,1)</p>
+
+<p>#Regression novice
+novice.length.breadth.lm &lt;- lm(length~breadth, data=r.cobble.data.novice.collected)
+summary(novice.length.breadth.lm)
+plot(r.cobble.data.novice.collected$length, r.cobble.data.novice.collected$breadth)
+abline(novice.length.breadth.lm)</p>
+
+<p>novice.length.thickness.lm &lt;- lm(length~thickness, data=r.cobble.data.novice.collected)
+summary(novice.length.thickness.lm)
+plot(r.cobble.data.novice.collected$length, r.cobble.data.novice.collected$thickness)
+abline(0,1)</p>
+
+<p>novice.breadth.thickness.lm &lt;- lm(breadth~thickness, data=r.cobble.data.novice.collected)
+summary(novice.breadth.thickness.lm)
+plot(r.cobble.data.novice.collected$breadth, r.cobble.data.novice.collected$thickness)
+abline(0,1)</p>
+
+<p>#plot variables against each other (novices)
+novice.length.thickness.plot &lt;- ggplot(r.cobble.data.novice.collected, aes(x = length, y = thickness)) +
+  geom_point() #ggplot of length vs thickness for collected expert cobbles
+novice.length.thickness.plot + ggtitle(&ldquo;Novice Collected Cobble Length vs. Thickness&rdquo;) + xlab(&ldquo;r2 = 0.5556&rdquo;)
+novice.length.breadth.plot &lt;- ggplot(r.cobble.data.novice.collected, aes(x = length, y = breadth)) +
+  geom_point()
+novice.length.breadth.plot + ggtitle(&ldquo;Novice Collected Cobble Length vs. Breadth&rdquo;) + xlab(&ldquo;r2 = 0.5947&rdquo;)
+novice.thickness.breadth.plot &lt;- ggplot(r.cobble.data.novice.collected, aes(x = thickness, y = breadth)) +
+  geom_point()
+novice.thickness.breadth.plot + ggtitle(&ldquo;Novice Collected Cobble Thickness vs. Breadth&rdquo;) + xlab(&ldquo;r2 = 0.4561&rdquo;)</p>
+
+<p>#Scatterplot matrices
+#expert collected
+library(gclus)
+dta &lt;- r.cobble.data.expert.collected[c(5,6,7,8)] # get data 
+dta.r &lt;- abs(cor(dta)) # get correlations
+dta.col &lt;- dmat.color(dta.r) # get colors</p>
+
+<h1>reorder variables so those with highest correlation</h1>
+
+<h1>are closest to the diagonal</h1>
+
+<p>dta.o &lt;- order.single(dta.r) 
+cpairs(dta, dta.o, panel.colors=dta.col, gap=.5,
+       main=&ldquo;Expert collected cobbles&rdquo; )</p>
+
+<p>#novice collected
+dta.n&lt;- r.cobble.data.novice.collected[c(5,6,7,8)] # get data 
+dta.n.r &lt;- abs(cor(dta)) # get correlations
+dta.n.col &lt;- dmat.color(dta.r) # get colors</p>
+
+<h1>reorder variables so those with highest correlation</h1>
+
+<h1>are closest to the diagonal</h1>
+
+<p>dta.n.o &lt;- order.single(dta.r) 
+cpairs(dta.n, dta.n.o, panel.colors=dta.n.col, gap=.5,
+       main=&ldquo;Novice collected cobbles&rdquo; )</p>
+
+</body>
+
+</html>
+
