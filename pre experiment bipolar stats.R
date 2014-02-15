@@ -1,5 +1,6 @@
 Bipolar-pre-experiment-stats
 ============================
+  #NEW
   #Cobble splitting data from pre-experiments
   
   #Load r.cobble.data; r.cobble.data.experts.only; r.cobble.data.novice.only from dropbox
